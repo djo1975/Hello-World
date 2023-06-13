@@ -4,24 +4,23 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const fetchGreeting = async () => {
-      const response = await fetch('/api/greetings/random_batch?count=5');
+      const response = await fetch('/api/greetings/random_batch?count=1');
       const data = await response.json();
       const greetingContainer = document.getElementById('root');
 
-      greetingContainer.innerHTML = ''; // Clear the container before appending new greetings
+      greetingContainer.innerHTML = ''; // Clear the container before appending new greeting
 
-      data.greetings.forEach(greeting => {
-        const p = document.createElement('p');
-        p.textContent = greeting;
-        greetingContainer.appendChild(p);
-      });
+      const p = document.createElement('p');
+      p.textContent = data.greetings[0];
+      greetingContainer.appendChild(p);
     };
 
-    fetchGreeting(); // Fetch and display greetings when the page loads
+    fetchGreeting(); // Fetch and display greeting when the page loads
 
     const reloadButton = document.createElement('button');
-    reloadButton.textContent = 'Reload Greetings';
+    reloadButton.textContent = 'Reload Greeting';
     reloadButton.addEventListener('click', fetchGreeting);
     document.body.appendChild(reloadButton);
   });
 </script>
+
