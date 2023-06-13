@@ -1,7 +1,6 @@
 class GreetingsController < ApplicationController
-    def random
-      random_greeting = Message.order(Arel.sql('RANDOM()')).first
-      render json: { greeting: random_greeting&.content }
-    end
+  def random_batch
+    random_greetings = Message.order(Arel.sql('RANDOM()')).limit(5).pluck(:content)
+    render json: { greetings: random_greetings }
   end
-  
+end

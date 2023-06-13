@@ -1,11 +1,27 @@
-<h1>Welcome to My App!</h1>
-<button id="random-greeting-button">Get Random Greeting</button>
-<div id="random-greeting"></div>
+<script src="<%= asset_path('application.js', type: :module) %>"></script>
+<div id="root"></div>
 
 <script>
-  document.getElementById('random-greeting-button').addEventListener('click', async () => {
-    const response = await fetch('/random_greeting');
-    const data = await response.json();
-    document.getElementById('random-greeting').innerText = data.greeting;
+  document.addEventListener('DOMContentLoaded', () => {
+    const fetchGreeting = async () => {
+      const response = await fetch('/api/greetings/random_batch?count=5');
+      const data = await response.json();
+      const greetingContainer = document.getElementById('root');
+
+      greetingContainer.innerHTML = ''; // Clear the container before appending new greetings
+
+      data.greetings.forEach(greeting => {
+        const p = document.createElement('p');
+        p.textContent = greeting;
+        greetingContainer.appendChild(p);
+      });
+    };
+
+    fetchGreeting(); // Fetch and display greetings when the page loads
+
+    const reloadButton = document.createElement('button');
+    reloadButton.textContent = 'Reload Greetings';
+    reloadButton.addEventListener('click', fetchGreeting);
+    document.body.appendChild(reloadButton);
   });
 </script>
