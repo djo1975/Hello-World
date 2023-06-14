@@ -1,11 +1,3 @@
-<h1>Welcome to My App!</h1>
-<button id="random-greeting-button">Get Random Greeting</button>
-<div id="random-greeting"></div>
+<div id="root"></div>
 
-<script>
-  document.getElementById('random-greeting-button').addEventListener('click', async () => {
-    const response = await fetch('/random_greeting');
-    const data = await response.json();
-    document.getElementById('random-greeting').innerText = data.greeting;
-  });
-</script>
+
