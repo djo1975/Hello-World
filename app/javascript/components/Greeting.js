@@ -4,9 +4,13 @@ const Greeting = () => {
   const [greeting, setGreeting] = useState('');
 
   useEffect(() => {
-    fetch('/api/greetings/random')
-      .then((response) => response.json())
-      .then((data) => setGreeting(data.greeting));
+    const fetchGreeting = async () => {
+      const response = await fetch('/api/greetings/random_batch?count=1');
+      const data = await response.json();
+      setGreeting(data.greetings[0]);
+    };
+
+    fetchGreeting();
   }, []);
 
   return (
