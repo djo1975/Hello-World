@@ -7,7 +7,7 @@ class GreetingsController < ApplicationController
   def random_batch
     count = params[:count].to_i
     random_greetings = Message.order(Arel.sql('RANDOM()')).limit(count)
-    greetings = random_greetings.map(&:content)
+    greetings = random_greetings.pluck(:content)
     render json: { greetings: }
   end
 end

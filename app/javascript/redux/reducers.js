@@ -1,18 +1,23 @@
+// rootReducer.js
 const initialState = {
-    greeting: '',
-  };
-  
-  const rootReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case 'SET_RANDOM_GREETING':
-        return {
-          ...state,
+  greetings: {
+    greeting: '', // Initialize the greeting property
+  },
+};
+
+const rootReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'SET_RANDOM_GREETING':
+      return {
+        ...state,
+        greetings: {
+          ...state.greetings,
           greeting: action.payload,
-        };
-      default:
-        return state;
-    }
-  };
-  
-  export default rootReducer;
-  
+        },
+      };
+    default:
+      return state;
+  }
+};
+
+export default rootReducer;

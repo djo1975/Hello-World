@@ -5940,20 +5940,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../redux/actions */ "./app/javascript/redux/actions.js");
 
-const Greeting = () => {
-  const [greeting, setGreeting] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+
+
+const Greeting = ({
+  greeting,
+  fetchRandomGreeting
+}) => {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    const fetchGreeting = async () => {
-      const response = await fetch('/api/greetings/random_batch?count=1');
-      const data = await response.json();
-      setGreeting(data.greetings[0]);
-    };
-    fetchGreeting();
-  }, []);
+    fetchRandomGreeting();
+  }, [fetchRandomGreeting]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Random Greeting"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, greeting));
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Greeting);
+const mapStateToProps = state => {
+  return {
+    greeting: state.greetings.greeting
+  };
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mapStateToProps, {
+  fetchRandomGreeting: _redux_actions__WEBPACK_IMPORTED_MODULE_2__.fetchRandomGreeting
+})(Greeting));
 
 /***/ }),
 
@@ -5968,6 +5976,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   fetchRandomGreeting: () => (/* binding */ fetchRandomGreeting),
 /* harmony export */   setRandomGreeting: () => (/* binding */ setRandomGreeting)
 /* harmony export */ });
+// actions.js
 const fetchRandomGreeting = () => {
   return dispatch => {
     fetch('/api/greetings/random').then(response => response.json()).then(data => {
@@ -5994,15 +6003,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+// rootReducer.js
 const initialState = {
-  greeting: ''
+  greetings: {
+    greeting: '' // Initialize the greeting property
+  }
 };
+
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_RANDOM_GREETING':
       return {
         ...state,
-        greeting: action.payload
+        greetings: {
+          ...state.greetings,
+          greeting: action.payload
+        }
       };
     default:
       return state;
@@ -6025,6 +6041,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
 /* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 /* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./reducers */ "./app/javascript/redux/reducers.js");
+// store.js
 
 
 
@@ -36228,6 +36245,38 @@ if (
 
 /***/ }),
 
+/***/ "./node_modules/react-dom/client.js":
+/*!******************************************!*\
+  !*** ./node_modules/react-dom/client.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+var m = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+if (false) {} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  exports.createRoot = function(c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+  exports.hydrateRoot = function(c, h, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.hydrateRoot(c, h, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/react-dom/index.js":
 /*!*****************************************!*\
   !*** ./node_modules/react-dom/index.js ***!
@@ -45873,13 +45922,15 @@ var __webpack_exports__ = {};
   !*** ./app/javascript/application.js ***!
   \***************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./redux/actions */ "./app/javascript/redux/actions.js");
-/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./redux/store */ "./app/javascript/redux/store.js");
-/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/App */ "./app/javascript/components/App.js");
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./redux/actions */ "./app/javascript/redux/actions.js");
+/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./redux/store */ "./app/javascript/redux/store.js");
+/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/App */ "./app/javascript/components/App.js");
+
 
 
 
@@ -45887,10 +45938,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
-    store: _redux_store__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_App__WEBPACK_IMPORTED_MODULE_5__["default"], null)), document.getElementById('root'));
-  _redux_store__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_3__.fetchRandomGreeting)());
+  const rootElement = document.getElementById('root');
+  const app = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_redux__WEBPACK_IMPORTED_MODULE_3__.Provider, {
+    store: _redux_store__WEBPACK_IMPORTED_MODULE_5__["default"]
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components_App__WEBPACK_IMPORTED_MODULE_6__["default"], null));
+  if (rootElement.hasChildNodes()) {
+    (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(rootElement).hydrate(app);
+  } else {
+    (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(rootElement).render(app);
+  }
+  _redux_store__WEBPACK_IMPORTED_MODULE_5__["default"].dispatch((0,_redux_actions__WEBPACK_IMPORTED_MODULE_4__.fetchRandomGreeting)());
 });
 })();
 

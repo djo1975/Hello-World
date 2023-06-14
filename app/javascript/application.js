@@ -1,3 +1,4 @@
+import { createRoot } from 'react-dom/client';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -6,12 +7,18 @@ import store from './redux/store';
 import App from './components/App';
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
+  const rootElement = document.getElementById('root');
+  const app = (
     <Provider store={store}>
       <App />
-    </Provider>,
-    document.getElementById('root')
+    </Provider>
   );
+
+  if (rootElement.hasChildNodes()) {
+    createRoot(rootElement).hydrate(app);
+  } else {
+    createRoot(rootElement).render(app);
+  }
 
   store.dispatch(fetchRandomGreeting());
 });
